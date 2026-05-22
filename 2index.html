@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Khalil Eubanks | Health Studies & Athletics Marketing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06060a;
+  --bg2:#0c0c12;
+  --bg3:#111118;
+  --bg4:#18181f;
+  --text:#f0ece4;
+  --muted:#7a7a8a;
+  --muted2:#4e4e5e;
+  --gold:#c8a96e;
+  --gold2:#dfc080;
+  --gold3:#e8d4a0;
+  --glow:rgba(200,169,110,0.08);
+  --glow2:rgba(200,169,110,0.04);
+  --border:rgba(200,169,110,0.18);
+  --border2:rgba(200,169,110,0.08);
+  --border3:rgba(200,169,110,0.04);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* CURSOR */
+#cursor{position:fixed;top:0;left:0;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,169,110,0.05) 0%,transparent 65%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;will-change:transform}
+
+/* NOISE OVERLAY */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.4;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:72px;transition:all 0.5s cubic-bezier(0.4,0,0.2,1)}
+nav.scrolled{background:rgba(6,6,10,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border3)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--gold);text-decoration:none;letter-spacing:0.04em}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;transition:color 0.25s;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.35s cubic-bezier(0.4,0,0.2,1)}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-open{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border);padding:0.45rem 1.1rem;border-radius:2px;text-decoration:none;transition:all 0.25s;font-weight:500}
+.nav-open:hover{background:var(--glow);border-color:var(--gold)}
+
+/* HERO */
+#home{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:72px 4rem 0;position:relative;overflow:hidden}
+.hero-inner{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6rem}
+.hero-tag{display:flex;align-items:center;gap:0.75rem;margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s 0.3s forwards}
+.hero-tag-line{width:28px;height:1px;background:var(--gold)}
+.hero-tag span{font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,7vw,7rem);font-weight:300;line-height:0.95;letter-spacing:-0.01em;margin-bottom:0.15em;opacity:0;animation:fadeUp 0.9s 0.5s forwards}
+.hero-name em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1rem;color:var(--muted);max-width:480px;line-height:1.8;margin:1.8rem 0 2.5rem;opacity:0;animation:fadeUp 0.9s 0.7s forwards}
+.hero-desc strong{color:var(--text);font-weight:500}
+.hero-btns{display:flex;gap:1rem;opacity:0;animation:fadeUp 0.9s 0.9s forwards}
+.btn-a{background:var(--gold);color:#06060a;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;padding:0.85rem 2rem;border-radius:2px;text-decoration:none;transition:all 0.25s}
+.btn-a:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-b{border:1px solid var(--border);color:var(--text);font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;padding:0.85rem 2rem;border-radius:2px;text-decoration:none;transition:all 0.25s}
+.btn-b:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{display:flex;flex-direction:column;gap:2rem;opacity:0;animation:fadeUp 0.9s 1.1s forwards}
+.hero-stat{text-align:right;padding-right:2rem;border-right:1px solid var(--border2)}
+.hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:var(--gold);line-height:1}
+.hero-stat-label{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.25rem}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeUp 0.9s 1.4s forwards}
+.hero-scroll span{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted2)}
+.hero-scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollLine 2s 2s infinite}
+@keyframes scrollLine{0%,100%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(0.5);transform-origin:top}}
+
+/* SECTION BASE */
+section{padding:8rem 4rem;position:relative}
+.sec-label{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem}
+.sec-label-num{font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--muted2);font-weight:400}
+.sec-label-line{width:32px;height:1px;background:var(--border)}
+.sec-label-text{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);font-weight:500}
+h2.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:300;line-height:1.1;margin-bottom:0.5em}
+h2.sec-title em{font-style:italic;color:var(--gold)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1),transform 0.8s cubic-bezier(0.4,0,0.2,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+.about-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
+.about-body p{color:var(--muted);font-size:1rem;line-height:1.85;margin-bottom:1.1rem}
+.about-body p strong{color:var(--text);font-weight:500}
+.about-body p:last-child{margin-bottom:0}
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border3);border:1px solid var(--border3);border-radius:4px;overflow:hidden;margin-top:3rem}
+.acard{background:var(--bg3);padding:1.75rem 1.5rem;transition:background 0.3s}
+.acard:hover{background:var(--bg4)}
+.acard-icon{font-size:1.25rem;margin-bottom:0.85rem}
+.acard h4{font-size:0.82rem;font-weight:600;color:var(--text);letter-spacing:0.04em;margin-bottom:0.4rem}
+.acard p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+/* EXPERIENCE */
+#experience{background:var(--bg)}
+.exp-wrap{max-width:1100px;margin:0 auto}
+.exp-tabs{display:flex;gap:0;margin-bottom:3rem;border-bottom:1px solid var(--border2)}
+.exp-tab{padding:0.75rem 1.5rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.25s;font-family:'Inter',sans-serif}
+.exp-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.exp-tab:hover{color:var(--text)}
+.exp-panels .exp-panel{display:none}
+.exp-panels .exp-panel.active{display:block}
+.exp-item{padding:2.5rem 0;border-bottom:1px solid var(--border3);display:grid;grid-template-columns:180px 1fr;gap:2.5rem;align-items:start}
+.exp-item:last-child{border-bottom:none}
+.exp-date{font-size:0.75rem;color:var(--muted2);letter-spacing:0.06em;line-height:1.6;padding-top:0.2rem}
+.exp-date span{display:block;color:var(--gold);font-size:0.7rem;letter-spacing:0.08em;margin-bottom:0.25rem}
+.exp-role{font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:0.3rem;letter-spacing:-0.01em}
+.exp-org{font-size:0.8rem;color:var(--gold);margin-bottom:0.85rem;font-weight:400}
+.exp-desc{font-size:0.88rem;color:var(--muted);line-height:1.8}
+.exp-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem}
+.exp-tag{font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border3);padding:0.25rem 0.65rem;border-radius:2px}
+
+/* ACTIVITIES */
+#activities{background:var(--bg2)}
+.act-wrap{max-width:1100px;margin:0 auto}
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border3);border:1px solid var(--border3);border-radius:6px;overflow:hidden}
+.act-card{background:var(--bg3);padding:2rem 1.75rem;position:relative;overflow:hidden;transition:background 0.3s;cursor:default}
+.act-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+.act-card:hover{background:var(--bg4)}
+.act-card:hover::after{transform:scaleX(1)}
+.act-year{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;font-weight:500}
+.act-title{font-size:0.95rem;font-weight:500;color:var(--text);margin-bottom:0.6rem;line-height:1.4}
+.act-desc{font-size:0.8rem;color:var(--muted);line-height:1.7}
+
+/* SKILLS */
+#skills{background:var(--bg)}
+.skills-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start}
+.skills-intro p{color:var(--muted);font-size:0.95rem;line-height:1.8}
+.skills-groups{display:flex;flex-direction:column;gap:2.5rem}
+.skill-group-title{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:500}
+.skill-pills{display:flex;flex-wrap:wrap;gap:0.5rem}
+.skill-pill{font-size:0.78rem;color:var(--muted);border:1px solid var(--border2);padding:0.4rem 1rem;border-radius:2px;transition:all 0.25s;background:transparent}
+.skill-pill:hover{color:var(--gold);border-color:var(--border);background:var(--glow2)}
+
+/* KNOWLEDGE GRAPH */
+#knowledge{background:var(--bg2);padding-bottom:6rem}
+.kg-wrap{max-width:1100px;margin:0 auto}
+.kg-desc{color:var(--muted);font-size:0.92rem;margin-bottom:2.5rem;max-width:560px;line-height:1.8}
+.kg-shell{position:relative;width:100%;height:620px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
+.kg-canvas{width:100%;height:100%;display:block}
+.kg-tooltip{position:absolute;display:none;background:var(--bg4);border:1px solid var(--border);color:var(--text);font-size:0.78rem;padding:0.6rem 1rem;border-radius:4px;pointer-events:none;max-width:220px;line-height:1.6;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.kg-tooltip strong{color:var(--gold);display:block;margin-bottom:0.15rem;font-size:0.82rem}
+.kg-legend{position:absolute;bottom:1rem;left:1rem;display:flex;gap:0.5rem;flex-wrap:wrap}
+.kg-chip{display:flex;align-items:center;gap:5px;font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:3px;cursor:pointer;transition:all 0.2s;border:1px solid transparent}
+.kg-hint{position:absolute;top:1rem;right:1rem;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted2)}
+
+/* CONTACT */
+#contact{background:var(--bg);padding:8rem 4rem}
+.contact-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
+.contact-left p{color:var(--muted);font-size:1rem;line-height:1.85;margin-top:1rem}
+.contact-links{display:flex;flex-direction:column;gap:0}
+.clink{display:flex;align-items:center;gap:1.25rem;padding:1.25rem 0;border-bottom:1px solid var(--border3);text-decoration:none;transition:all 0.25s;group:true}
+.clink:first-child{border-top:1px solid var(--border3)}
+.clink:hover{padding-left:0.5rem}
+.clink-icon{width:36px;height:36px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;transition:all 0.25s;color:var(--gold)}
+.clink:hover .clink-icon{background:var(--glow);border-color:var(--border)}
+.clink-text{font-size:0.9rem;color:var(--text);font-weight:400}
+.clink-sub{font-size:0.72rem;color:var(--muted);margin-top:0.1rem}
+.clink-arrow{margin-left:auto;color:var(--muted2);font-size:0.9rem;transition:transform 0.25s,color 0.25s}
+.clink:hover .clink-arrow{transform:translateX(4px);color:var(--gold)}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border3);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between}
+footer p{font-size:0.75rem;color:var(--muted2);letter-spacing:0.04em}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--muted2);font-weight:600}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* DIVIDER */
+.section-divider{max-width:1100px;margin:0 auto 5rem;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
+
+@media(max-width:900px){
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  section{padding:5rem 1.5rem}
+  #home{padding:72px 1.5rem 0}
+  .hero-inner{grid-template-columns:1fr;gap:3rem}
+  .hero-stats{flex-direction:row;gap:2rem}
+  .hero-stat{text-align:left;border-right:none;padding-right:0;border-left:1px solid var(--border2);padding-left:1.5rem}
+  .about-wrap{grid-template-columns:1fr;gap:3rem}
+  .about-cards{grid-template-columns:1fr}
+  .act-grid{grid-template-columns:1fr}
+  .skills-wrap{grid-template-columns:1fr;gap:3rem}
+  .contact-wrap{grid-template-columns:1fr;gap:3rem}
+  .exp-item{grid-template-columns:1fr;gap:0.5rem}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="#home">KE</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#activities">Activities</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#knowledge">Graph</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-open" href="#contact">Open to Opportunities</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag">
+        <div class="hero-tag-line"></div>
+        <span>Health Studies · Exercise Science · Athletics Marketing</span>
+      </div>
+      <h1 class="hero-name">Khalil<br/><em>Eubanks</em></h1>
+      <p class="hero-desc">Sophomore at <strong>Monmouth University</strong> pursuing a B.S. in Health Studies. Athletics Marketing Director at OceanFirst Bank Center and President of Alpha Phi Alpha — leading with purpose on and off the field.</p>
+      <div class="hero-btns">
+        <a class="btn-a" href="#experience">View Experience</a>
+        <a class="btn-b" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">3.91</div>
+        <div class="hero-stat-label">Cumulative GPA</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">5+</div>
+        <div class="hero-stat-label">Roles Held</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">10+</div>
+        <div class="hero-stat-label">Activities</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div>
+      <div class="sec-label reveal">
+        <span class="sec-label-num">01</span>
+        <div class="sec-label-line"></div>
+        <span class="sec-label-text">About Me</span>
+      </div>
+      <h2 class="sec-title reveal">Exercise Science<br/><em>Meets Leadership</em></h2>
+      <div class="about-body reveal">
+        <p>I'm a sophomore at <strong>Monmouth University</strong> in West Long Branch, NJ, majoring in Health Studies with a concentration in Exercise Science — carrying a cumulative GPA of 3.91.</p>
+        <p>As <strong>Athletics Marketing Director</strong> at OceanFirst Bank Center, I build campaigns that connect fans to the game. My time as a Desk Assistant and Group Leader taught me what it means to show up consistently for others.</p>
+        <p>As <strong>President of Alpha Phi Alpha</strong> (2026–2027), I lead a brotherhood committed to scholarship, service, and community. Everything I do is rooted in a belief that wellness and strong communities go hand in hand.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="about-cards">
+        <div class="acard">
+          <div class="acard-icon">🎯</div>
+          <h4>Leadership</h4>
+          <p>Guiding 19+ students as Group Leader, fraternity president, and peer counselor.</p>
+        </div>
+        <div class="acard">
+          <div class="acard-icon">🏋️</div>
+          <h4>Exercise Science</h4>
+          <p>B.S. Health Studies focused on movement, performance, and motor training.</p>
+        </div>
+        <div class="acard">
+          <div class="acard-icon">📣</div>
+          <h4>Athletics Marketing</h4>
+          <p>Director at OceanFirst Bank Center driving fan engagement and brand visibility.</p>
+        </div>
+        <div class="acard">
+          <div class="acard-icon">🤝</div>
+          <h4>Community</h4>
+          <p>BSU events, motor training volunteer, peer counselor for 50+ students.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="exp-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-label-num">02</span>
+      <div class="sec-label-line"></div>
+      <span class="sec-label-text">Experience</span>
+    </div>
+    <h2 class="sec-title reveal">Professional<br/><em>History</em></h2>
+
+    <div class="exp-tabs reveal">
+      <button class="exp-tab active" onclick="switchTab('work',this)">Work</button>
+      <button class="exp-tab" onclick="switchTab('leadership',this)">Leadership</button>
+    </div>
+
+    <div class="exp-panels">
+      <div class="exp-panel active" id="panel-work">
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Current</span>Sept 2025 – Present<br/>West Long Branch, NJ</div>
+          <div>
+            <div class="exp-role">Athletics Marketing Director</div>
+            <div class="exp-org">OceanFirst Bank Center — Monmouth University</div>
+            <p class="exp-desc">Leading marketing initiatives for Monmouth University athletics. Developing campaigns that drive fan engagement, attendance, and brand visibility across the athletic department.</p>
+            <div class="exp-tags"><span class="exp-tag">Marketing</span><span class="exp-tag">Branding</span><span class="exp-tag">Athletics</span></div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Previous</span>Oct 2024 – May 2025<br/>West Long Branch, NJ</div>
+          <div>
+            <div class="exp-role">Desk Assistant</div>
+            <div class="exp-org">Monmouth University Residential Life</div>
+            <p class="exp-desc">Provided front-line support for residential students, managing check-ins, resolving issues, and fostering a welcoming community environment with strong communication and problem-solving skills.</p>
+            <div class="exp-tags"><span class="exp-tag">Communication</span><span class="exp-tag">Problem Solving</span><span class="exp-tag">Community</span></div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Previous</span>2025<br/>West Long Branch, NJ</div>
+          <div>
+            <div class="exp-role">Peer Counselor</div>
+            <div class="exp-org">Monmouth University</div>
+            <p class="exp-desc">Guided and mentored 50 students, enhancing satisfaction scores through strategic academic support and resource navigation. Cultivated a positive and inclusive community environment.</p>
+            <div class="exp-tags"><span class="exp-tag">Counseling</span><span class="exp-tag">Mentorship</span><span class="exp-tag">Inclusion</span></div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Current</span>2026<br/>West Long Branch, NJ</div>
+          <div>
+            <div class="exp-role">Peer Counselor</div>
+            <div class="exp-org">Monmouth University</div>
+            <p class="exp-desc">Continued mentoring and advising students through academic and personal challenges, deepening impact and expanding outreach across the campus community.</p>
+            <div class="exp-tags"><span class="exp-tag">Counseling</span><span class="exp-tag">Mentorship</span><span class="exp-tag">Outreach</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-panel" id="panel-leadership">
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Current</span>2026 – 2027</div>
+          <div>
+            <div class="exp-role">Chapter President</div>
+            <div class="exp-org">Alpha Phi Alpha Fraternity</div>
+            <p class="exp-desc">Serving as Chapter President, leading fraternity operations, academic initiatives, and community engagement. Driving strategic growth through educational workshops, team-building, and social media outreach.</p>
+            <div class="exp-tags"><span class="exp-tag">Leadership</span><span class="exp-tag">Operations</span><span class="exp-tag">Strategy</span></div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Previous</span>2023 – 2024</div>
+          <div>
+            <div class="exp-role">Group Leader (SBP)</div>
+            <div class="exp-org">Monmouth University</div>
+            <p class="exp-desc">Guided and mentored 19 students daily, enhancing academic performance by 10% through consistent attendance tracking, behavioral support, and fostering a positive Student Bridge Program culture.</p>
+            <div class="exp-tags"><span class="exp-tag">Mentorship</span><span class="exp-tag">Academic Support</span><span class="exp-tag">Leadership</span></div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-date"><span>Ongoing</span>2017 – 2023</div>
+          <div>
+            <div class="exp-role">CEO — Dance Team</div>
+            <div class="exp-org">Independent</div>
+            <p class="exp-desc">Led a dance team as CEO over six years, organized group practice days, and taught skills to help members develop and improve their craft. Built team culture and discipline from the ground up.</p>
+            <div class="exp-tags"><span class="exp-tag">Leadership</span><span class="exp-tag">Coaching</span><span class="exp-tag">Team Building</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="act-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-label-num">03</span>
+      <div class="sec-label-line"></div>
+      <span class="sec-label-text">Activities & Involvement</span>
+    </div>
+    <h2 class="sec-title reveal">Beyond the<br/><em>Classroom</em></h2>
+    <div class="act-grid reveal">
+      <div class="act-card">
+        <div class="act-year">2021</div>
+        <div class="act-title">Appalachian Trail Hike</div>
+        <p class="act-desc">Team navigator leading a freshman group through a 55-mile trail. Learned teamwork, sacrifice, and caring for others in demanding conditions.</p>
+      </div>
+      <div class="act-card">
+        <div class="act-year">2022</div>
+        <div class="act-title">Community Service</div>
+        <p class="act-desc">Volunteered with individuals with physical disabilities, assisting motor training so they could learn and relearn everyday actions and activities.</p>
+      </div>
+      <div class="act-card">
+        <div class="act-year">2022</div>
+        <div class="act-title">Swim Team — JV</div>
+        <p class="act-desc">Competed in Freestyle 50 and 100 events. Developed discipline and physical endurance through consistent training and competition.</p>
+      </div>
+      <div class="act-card">
+        <div class="act-year">2022 – 2024</div>
+        <div class="act-title">CrossFit Member</div>
+        <p class="act-desc">Challenged myself with diverse physical training, focused on building muscle strength and overall fitness through consistent effort and discipline.</p>
+      </div>
+      <div class="act-card">
+        <div class="act-year">Ongoing</div>
+        <div class="act-title">Black Student Union</div>
+        <p class="act-desc">Cultivated community connections and orchestrated impactful events at Monmouth University, enhancing inclusivity and fostering leadership development.</p>
+      </div>
+      <div class="act-card">
+        <div class="act-year">2026 – 2027</div>
+        <div class="act-title">Alpha Phi Alpha — President</div>
+        <p class="act-desc">Leading chapter operations as President, facilitating educational workshops and driving academic performance and community engagement across the fraternity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-wrap">
+    <div>
+      <div class="sec-label reveal">
+        <span class="sec-label-num">04</span>
+        <div class="sec-label-line"></div>
+        <span class="sec-label-text">Skills</span>
+      </div>
+      <h2 class="sec-title reveal">Core<br/><em>Competencies</em></h2>
+      <p class="reveal" style="color:var(--muted);font-size:0.92rem;line-height:1.8;margin-top:1rem">Built through real experience — in the classroom, on the field, and in the community.</p>
+    </div>
+    <div class="skills-groups reveal">
+      <div>
+        <div class="skill-group-title">Leadership & Management</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Leadership</span>
+          <span class="skill-pill">Team Management</span>
+          <span class="skill-pill">Project Management</span>
+          <span class="skill-pill">Collaboration</span>
+          <span class="skill-pill">Mentorship</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title">Communication & Strategy</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Communication</span>
+          <span class="skill-pill">Problem Solving</span>
+          <span class="skill-pill">Critical Thinking</span>
+          <span class="skill-pill">Marketing</span>
+          <span class="skill-pill">Event Planning</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group-title">Health & Exercise Science</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Exercise Science</span>
+          <span class="skill-pill">Motor Training</span>
+          <span class="skill-pill">Athletic Performance</span>
+          <span class="skill-pill">CrossFit</span>
+          <span class="skill-pill">Physical Wellness</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KNOWLEDGE GRAPH -->
+<section id="knowledge">
+  <div class="kg-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-label-num">05</span>
+      <div class="sec-label-line"></div>
+      <span class="sec-label-text">Knowledge Graph</span>
+    </div>
+    <h2 class="sec-title reveal">How It All<br/><em>Connects</em></h2>
+    <p class="kg-desc reveal">An interactive map of how my skills, roles, activities, and education connect. Click any node to highlight its connections — drag to rearrange, scroll to zoom.</p>
+    <div class="kg-shell reveal">
+      <canvas class="kg-canvas" id="kg"></canvas>
+      <div class="kg-tooltip" id="kg-tip"></div>
+      <div class="kg-legend" id="kg-legend"></div>
+      <div class="kg-hint">click · drag · scroll</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <div class="sec-label reveal">
+        <span class="sec-label-num">06</span>
+        <div class="sec-label-line"></div>
+        <span class="sec-label-text">Contact</span>
+      </div>
+      <h2 class="sec-title reveal">Let's<br/><em>Connect</em></h2>
+      <p class="reveal">Open to opportunities in athletics, health & wellness, and marketing. Whether it's a role, collaboration, or conversation — reach out.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a class="clink" href="mailto:eubankskhalil306@gmail.com">
+        <div class="clink-icon">✉</div>
+        <div><div class="clink-text">eubankskhalil306@gmail.com</div><div class="clink-sub">Personal Email</div></div>
+        <div class="clink-arrow">→</div>
+      </a>
+      <a class="clink" href="mailto:s1374320@monmouth.edu">
+        <div class="clink-icon">🎓</div>
+        <div><div class="clink-text">s1374320@monmouth.edu</div><div class="clink-sub">University Email</div></div>
+        <div class="clink-arrow">→</div>
+      </a>
+      <a class="clink" href="tel:9736872218">
+        <div class="clink-icon">📞</div>
+        <div><div class="clink-text">(973) 687-2218</div><div class="clink-sub">Phone</div></div>
+        <div class="clink-arrow">→</div>
+      </a>
+      <a class="clink" href="https://linkedin.com/in/khalil-eubanks" target="_blank">
+        <div class="clink-icon">💼</div>
+        <div><div class="clink-text">LinkedIn</div><div class="clink-sub">Khalil Eubanks</div></div>
+        <div class="clink-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">KE</span>
+  <p>© 2026 Khalil Eubanks · Newark, NJ · Monmouth University</p>
+  <p style="color:var(--muted2);font-size:0.72rem">Health Studies · Exercise Science</p>
+</footer>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`});
+
+// NAV SCROLL
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+
+// NAV ACTIVE
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)});
+    }
+  });
+},{threshold:0.4});
+secs.forEach(s=>io.observe(s));
+
+// REVEAL
+const revealEls=document.querySelectorAll('.reveal');
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*60);
+      ro.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+revealEls.forEach(el=>ro.observe(el));
+
+// TABS
+function switchTab(name,btn){
+  document.querySelectorAll('.exp-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.exp-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+}
+
+// ======== KNOWLEDGE GRAPH ========
+(function(){
+  const canvas=document.getElementById('kg');
+  const tip=document.getElementById('kg-tip');
+  const shell=canvas.parentElement;
+  const ctx=canvas.getContext('2d');
+  let W,H,dpr=devicePixelRatio||1;
+  let scale=1,ox=0,oy=0;
+  let dragged=null,panning=false,panSX=0,panSY=0,panOX=0,panOY=0;
+  let selected=null,hovered=null;
+  let animFrame=0;
+
+  const TYPES={
+    center: {color:'#c8a96e',label:'Center'},
+    education:{color:'#5DCAA5',label:'Education'},
+    work:    {color:'#7F77DD',label:'Work'},
+    org:     {color:'#ED93B1',label:'Organizations'},
+    activity:{color:'#E87D3E',label:'Activities'},
+    skill:   {color:'#378ADD',label:'Skills'},
+  };
+
+  const nodes=[
+    {id:0,label:'Khalil\nEubanks',type:'center',r:30,info:'Health Studies · Exercise Science · GPA 3.91',x:0,y:0,vx:0,vy:0},
+    {id:1,label:'Monmouth\nUniversity',type:'education',r:22,info:'B.S. Health Studies: Exercise Science · Class of 2026',x:0,y:0,vx:0,vy:0},
+    {id:2,label:'Athletics\nMarketing',type:'work',r:19,info:'Director · OceanFirst Bank Center · Sept 2025–Present',x:0,y:0,vx:0,vy:0},
+    {id:3,label:'Desk\nAssistant',type:'work',r:16,info:'Monmouth Res. Life · Oct 2024–May 2025',x:0,y:0,vx:0,vy:0},
+    {id:4,label:'Group\nLeader',type:'work',r:17,info:'SBP · 2023–2024 · +10% academic performance',x:0,y:0,vx:0,vy:0},
+    {id:5,label:'Peer\nCounselor',type:'work',r:18,info:'Monmouth · 2025 & 2026 · 50 students guided',x:0,y:0,vx:0,vy:0},
+    {id:6,label:'Alpha Phi\nAlpha',type:'org',r:20,info:'President 2026–2027 · Workshops & outreach',x:0,y:0,vx:0,vy:0},
+    {id:7,label:'Black\nStudent Union',type:'org',r:17,info:'Events organizer · Inclusivity & leadership',x:0,y:0,vx:0,vy:0},
+    {id:8,label:'Dance\nTeam CEO',type:'activity',r:16,info:'2017–2023 · Led team, taught craft',x:0,y:0,vx:0,vy:0},
+    {id:9,label:'Appalachian\nTrail',type:'activity',r:14,info:'2021 · Navigator · 55-mile hike',x:0,y:0,vx:0,vy:0},
+    {id:10,label:'Swim\nTeam',type:'activity',r:13,info:'JV 2022 · Freestyle 50 & 100',x:0,y:0,vx:0,vy:0},
+    {id:11,label:'CrossFit',type:'activity',r:13,info:'2022–2024 · Strength & conditioning',x:0,y:0,vx:0,vy:0},
+    {id:12,label:'Community\nService',type:'activity',r:14,info:'Motor training · Physical disabilities support',x:0,y:0,vx:0,vy:0},
+    {id:13,label:'Leadership',type:'skill',r:17,info:'Group Leader · Dance CEO · Alpha Phi Alpha President',x:0,y:0,vx:0,vy:0},
+    {id:14,label:'Communication',type:'skill',r:15,info:'Peer Counseling · Marketing · Desk Assistant',x:0,y:0,vx:0,vy:0},
+    {id:15,label:'Team\nManagement',type:'skill',r:15,info:'Led 19 students · Fraternity operations',x:0,y:0,vx:0,vy:0},
+    {id:16,label:'Exercise\nScience',type:'skill',r:16,info:'Major focus · Motor training · CrossFit',x:0,y:0,vx:0,vy:0},
+    {id:17,label:'Marketing\n& Events',type:'skill',r:15,info:'Athletics Marketing Director · BSU Events',x:0,y:0,vx:0,vy:0},
+  ];
+
+  const edges=[
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,13],[0,16],
+    [1,2],[1,3],[1,4],[1,5],[1,6],[1,7],
+    [2,17],[2,14],[2,15],
+    [3,14],[3,13],
+    [4,13],[4,15],[4,14],
+    [5,14],[5,13],
+    [6,13],[6,15],[6,7],
+    [7,13],[7,14],[7,17],
+    [8,13],[8,15],
+    [9,13],[9,15],
+    [10,16],[11,16],[12,16],
+    [13,15],[14,15],[16,11],[16,12],
+  ];
+
+  // build adjacency
+  const adj=new Map();
+  nodes.forEach(n=>adj.set(n.id,new Set()));
+  edges.forEach(([a,b])=>{adj.get(a).add(b);adj.get(b).add(a)});
+
+  function resize(){
+    const r=shell.getBoundingClientRect();
+    W=r.width; H=r.height;
+    canvas.width=W*dpr; canvas.height=H*dpr;
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    ctx.scale(dpr,dpr);
+    if(!nodes[0].x){place();}
+  }
+
+  function place(){
+    nodes[0].x=W/2; nodes[0].y=H/2;
+    const rings=[[1,2,3,4,5,6,7],[8,9,10,11,12],[13,14,15,16,17]];
+    const R=[145,255,360];
+    rings.forEach((ring,ri)=>{
+      ring.forEach((id,i)=>{
+        const a=(i/ring.length)*Math.PI*2-Math.PI/2+(ri%2?Math.PI/ring.length:0);
+        nodes[id].x=W/2+Math.cos(a)*R[ri];
+        nodes[id].y=H/2+Math.sin(a)*R[ri];
+        nodes[id].vx=(Math.random()-0.5)*0.5;
+        nodes[id].vy=(Math.random()-0.5)*0.5;
+      });
+    });
+  }
+
+  function simulate(){
+    const repel=4500,spring=0.018,rest=115,damp=0.82;
+    nodes.forEach(n=>{
+      if(n===dragged){n.vx=0;n.vy=0;return;}
+      nodes.forEach(m=>{
+        if(m===n)return;
+        let dx=n.x-m.x,dy=n.y-m.y,d=Math.sqrt(dx*dx+dy*dy)||0.1;
+        let f=repel/(d*d);
+        n.vx+=dx/d*f*0.5; n.vy+=dy/d*f*0.5;
+      });
+      // boundary
+      let cx=W/2,cy=H/2,bdx=n.x-cx,bdy=n.y-cy,bd=Math.sqrt(bdx*bdx+bdy*bdy);
+      if(bd>W*0.42){n.vx-=bdx/bd*2;n.vy-=bdy/bd*2;}
+    });
+    edges.forEach(([a,b])=>{
+      let na=nodes[a],nb=nodes[b];
+      let dx=nb.x-na.x,dy=nb.y-na.y,d=Math.sqrt(dx*dx+dy*dy)||0.1;
+      let f=(d-rest)*spring;
+      let fx=dx/d*f,fy=dy/d*f;
+      if(na!==dragged){na.vx+=fx;na.vy+=fy;}
+      if(nb!==dragged){nb.vx-=fx;nb.vy-=fy;}
+    });
+    nodes.forEach(n=>{
+      if(n===dragged)return;
+      n.vx*=damp; n.vy*=damp;
+      n.x+=n.vx; n.y+=n.vy;
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.save();
+    ctx.translate(ox,oy);
+    ctx.scale(scale,scale);
+
+    const connSet=selected!==null?adj.get(selected):null;
+
+    // draw edges
+    edges.forEach(([a,b])=>{
+      const na=nodes[a],nb=nodes[b];
+      const active=selected===null||selected===na.id||selected===nb.id;
+      const col=active?'rgba(200,169,110,0.22)':'rgba(200,169,110,0.04)';
+      ctx.beginPath();
+      ctx.moveTo(na.x,na.y);
+      ctx.lineTo(nb.x,nb.y);
+      ctx.strokeStyle=col;
+      ctx.lineWidth=active?1.5:0.8;
+      ctx.stroke();
+    });
+
+    // draw nodes
+    nodes.forEach(n=>{
+      const isSelected=n.id===selected;
+      const isHovered=n.id===hovered;
+      const isConnected=connSet&&connSet.has(n.id);
+      const active=selected===null||isSelected||isConnected;
+      const col=TYPES[n.type].color;
+      const alpha=active?1:0.15;
+
+      // outer glow ring for selected
+      if(isSelected){
+        ctx.beginPath();
+        ctx.arc(n.x,n.y,n.r+14,0,Math.PI*2);
+        ctx.fillStyle=col+'18';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(n.x,n.y,n.r+8,0,Math.PI*2);
+        ctx.fillStyle=col+'28';
+        ctx.fill();
+      }
+
+      // hover ring
+      if(isHovered&&!isSelected){
+        ctx.beginPath();
+        ctx.arc(n.x,n.y,n.r+6,0,Math.PI*2);
+        ctx.fillStyle=col+'20';
+        ctx.fill();
+      }
+
+      // fill
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      const fillA=active?(isSelected?'38':'22'):'0a';
+      ctx.fillStyle=col+fillA;
+      ctx.fill();
+
+      // stroke
+      ctx.strokeStyle=active?col:col+'28';
+      ctx.lineWidth=isSelected?2:1;
+      ctx.stroke();
+
+      // label
+      ctx.fillStyle=active?col:col+'30';
+      const fs=n.id===0?11:9;
+      ctx.font=`${n.id===0?'600':'400'} ${fs}px 'Inter',sans-serif`;
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      const lines=n.label.split('\n');
+      const lh=fs+3;
+      if(lines.length===1){
+        ctx.fillText(n.label,n.x,n.y);
+      } else {
+        ctx.fillText(lines[0],n.x,n.y-lh/2);
+        ctx.fillText(lines[1],n.x,n.y+lh/2);
+      }
+    });
+
+    ctx.restore();
+  }
+
+  function loop(){simulate();draw();animFrame=requestAnimationFrame(loop);}
+
+  function toW(cx,cy){
+    const r=shell.getBoundingClientRect();
+    return{x:(cx-r.left-ox)/scale,y:(cy-r.top-oy)/scale};
+  }
+  function hitNode(cx,cy){
+    const{x,y}=toW(cx,cy);
+    return nodes.find(n=>Math.hypot(n.x-x,n.y-y)<n.r+6)||null;
+  }
+
+  canvas.addEventListener('mousedown',e=>{
+    const n=hitNode(e.clientX,e.clientY);
+    if(n){dragged=n;}
+    else{panning=true;panSX=e.clientX;panSY=e.clientY;panOX=ox;panOY=oy;}
+    e.preventDefault();
+  });
+
+  let moved=false;
+  canvas.addEventListener('mousemove',e=>{
+    moved=true;
+    if(dragged){
+      const w=toW(e.clientX,e.clientY);
+      dragged.x=w.x; dragged.y=w.y;
+      dragged.vx=0; dragged.vy=0;
+    } else if(panning){
+      ox=panOX+(e.clientX-panSX);
+      oy=panOY+(e.clientY-panSY);
+    }
+    const n=hitNode(e.clientX,e.clientY);
+    hovered=n?n.id:null;
+    canvas.style.cursor=n?'pointer':(panning?'grabbing':'grab');
+    if(n){
+      const r=shell.getBoundingClientRect();
+      tip.style.display='block';
+      let tx=e.clientX-r.left+14, ty=e.clientY-r.top-10;
+      if(tx+230>W)tx=e.clientX-r.left-240;
+      tip.style.left=tx+'px'; tip.style.top=ty+'px';
+      tip.innerHTML=`<strong>${n.label.replace('\n',' ')}</strong>${n.info}`;
+    } else {
+      tip.style.display='none';
+    }
+  });
+
+  canvas.addEventListener('mouseup',e=>{
+    if(!moved&&dragged){
+      // click
+    } else if(!panning){
+      const n=hitNode(e.clientX,e.clientY);
+      if(n) selected=selected===n.id?null:n.id;
+    }
+    moved=false;
+    dragged=null; panning=false;
+  });
+
+  canvas.addEventListener('mouseleave',()=>{
+    dragged=null;panning=false;tip.style.display='none';hovered=null;
+  });
+
+  canvas.addEventListener('wheel',e=>{
+    e.preventDefault();
+    const f=e.deltaY<0?1.12:0.9;
+    const r=shell.getBoundingClientRect();
+    const mx=e.clientX-r.left,my=e.clientY-r.top;
+    ox=mx-(mx-ox)*f; oy=my-(my-oy)*f;
+    scale=Math.min(4,Math.max(0.25,scale*f));
+  },{passive:false});
+
+  // touch support
+  let lastTouch=null;
+  canvas.addEventListener('touchstart',e=>{
+    if(e.touches.length===1){
+      const t=e.touches[0];
+      const n=hitNode(t.clientX,t.clientY);
+      if(n){dragged=n;}
+      else{panning=true;panSX=t.clientX;panSY=t.clientY;panOX=ox;panOY=oy;}
+    }
+    lastTouch=e.touches[0];
+    e.preventDefault();
+  },{passive:false});
+  canvas.addEventListener('touchmove',e=>{
+    if(e.touches.length===1){
+      const t=e.touches[0];
+      if(dragged){const w=toW(t.clientX,t.clientY);dragged.x=w.x;dragged.y=w.y;dragged.vx=0;dragged.vy=0;}
+      else if(panning){ox=panOX+(t.clientX-panSX);oy=panOY+(t.clientY-panSY);}
+    }
+    e.preventDefault();
+  },{passive:false});
+  canvas.addEventListener('touchend',e=>{
+    if(lastTouch){
+      const n=hitNode(lastTouch.clientX,lastTouch.clientY);
+      if(n&&!dragged)selected=selected===n.id?null:n.id;
+    }
+    dragged=null;panning=false;
+  });
+
+  // Legend
+  const leg=document.getElementById('kg-legend');
+  Object.entries(TYPES).filter(([k])=>k!=='center').forEach(([key,{color,label}])=>{
+    const chip=document.createElement('div');
+    chip.className='kg-chip';
+    chip.style.cssText=`color:${color};background:${color}18;border-color:${color}44;`;
+    chip.innerHTML=`<span style="width:6px;height:6px;border-radius:50%;background:${color};display:inline-block"></span>${label}`;
+    chip.addEventListener('click',()=>{
+      const ids=nodes.filter(n=>n.type===key).map(n=>n.id);
+      selected=ids.includes(selected)?null:ids[0];
+    });
+    leg.appendChild(chip);
+  });
+
+  new ResizeObserver(resize).observe(shell);
+  resize();
+  loop();
+})();
+</script>
+</body>
+</html>
